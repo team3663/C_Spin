@@ -12,7 +12,6 @@ public class C_ZeroDrivetrainGyro extends Command {
 
 	@Override
 	public void execute() {
-		System.out.println("ZERO ZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZEROZERO");
 		mDrivetrain.zeroGyro();
 	}
 
