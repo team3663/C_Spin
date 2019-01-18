@@ -119,10 +119,10 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         
         zeroGyro();
 
-        double FL = 150;
-        double FR = 172;
-        double BL = 47;
-        double BR = 35;
+        double FL = 148; //front right
+        double FR = 10; //fronnt left
+        double BL = 65; //back right
+        double BR = 32; //back left
         SmartDashboard.putNumber("Front Right", FR);
         SmartDashboard.putNumber("Front Left", FL);
         SmartDashboard.putNumber("Back Right", BR);
@@ -130,23 +130,16 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
         
 
-        if (Robot.PRACTICE_BOT) {
-            mSwerveModules = new SwerveModule[]  {
-                new SwerveModule(0, new TalonSRX(RobotMap.getAngleMotors(0)), new CANSparkMax(RobotMap.getDriveMotors(0), MotorType.kBrushless), FR),
-                new SwerveModule(1, new TalonSRX(RobotMap.getAngleMotors(1)), new CANSparkMax(RobotMap.getDriveMotors(1), MotorType.kBrushless), FL),
-                new SwerveModule(2, new TalonSRX(RobotMap.getAngleMotors(2)), new CANSparkMax(RobotMap.getDriveMotors(2), MotorType.kBrushless), BL),
-                new SwerveModule(3, new TalonSRX(RobotMap.getAngleMotors(3)), new CANSparkMax(RobotMap.getDriveMotors(3), MotorType.kBrushless), BR),
+    
+        mSwerveModules = new SwerveModule[]  {
+            new SwerveModule(0, new TalonSRX(RobotMap.getAngleMotors(0)), new CANSparkMax(RobotMap.getDriveMotors(0), MotorType.kBrushless), FR),
+            new SwerveModule(1, new TalonSRX(RobotMap.getAngleMotors(1)), new CANSparkMax(RobotMap.getDriveMotors(1), MotorType.kBrushless), FL),
+            new SwerveModule(2, new TalonSRX(RobotMap.getAngleMotors(2)), new CANSparkMax(RobotMap.getDriveMotors(2), MotorType.kBrushless), BL),
+            new SwerveModule(3, new TalonSRX(RobotMap.getAngleMotors(3)), new CANSparkMax(RobotMap.getDriveMotors(3), MotorType.kBrushless), BR),
         };
-
-            mSwerveModules[3].setDriveInverted(true);
-        } else {
-            mSwerveModules = new SwerveModule[] {
-
-            };
-
-            mSwerveModules[0].setDriveInverted(true);
-            mSwerveModules[3].setDriveInverted(true);
-        }
+        mSwerveModules[3].setDriveInverted(true);
+    
+        
 
         for (SwerveModule module : mSwerveModules) {
             //module.setTargetAngle(0);
@@ -276,10 +269,5 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     public SwerveModule[] getSwerveModules() {
         return mSwerveModules;
     }
-
-
-
-
-
 
 }
