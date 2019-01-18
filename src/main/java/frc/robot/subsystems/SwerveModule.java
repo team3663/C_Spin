@@ -51,13 +51,7 @@ public class SwerveModule  {
         
         angleMotor.set(ControlMode.Position, 0);
 
-        // driveMotor.setParameter(parameterID, value);
-
-        // driveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 0);
-        // driveMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 0);
         driveMotor.setControlFramePeriod(10);
-
-
         driveMotor.setIdleMode(IdleMode.kBrake);
 
         driveMotor.getPIDController().setP(15);
@@ -66,9 +60,6 @@ public class SwerveModule  {
         driveMotor.getPIDController().setFF(.2);
 
         
-        // driveMotor.configMotionCruiseVelocity(640, 0);
-        // driveMotor.configMotionAcceleration(200, 0);
-
 
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
@@ -82,19 +73,26 @@ public class SwerveModule  {
     }
 
     private double encoderTicksToInches(double ticks) {
-        if (Robot.PRACTICE_BOT) {
-            return ticks / 36.65;
-        } else {
-            return ticks / 35.6;
-        }
+        // if (Robot.PRACTICE_BOT) {
+        //     return ticks / 36.65;
+        // } else {
+        //     return ticks / 35.6;
+        // }
+
+        //TODO
+        return 0;
     }
 
     private int inchesToEncoderTicks(double inches) {
-        if (Robot.PRACTICE_BOT) {
-            return (int) Math.round(inches * 36.65);
-        } else {
-            return (int) Math.round(inches * 35.6);
-        }
+        // if (Robot.PRACTICE_BOT) {
+        //     return (int) Math.round(inches * 36.65);
+        // } else {
+        //     return (int) Math.round(inches * 35.6);
+        // }
+        
+
+        //TODO 
+        return 0;
     }
 
     public TalonSRX getAngleMotor() {
@@ -116,13 +114,14 @@ public class SwerveModule  {
     }
 
 
-    //distance stuff needs to be changedW
+    //distance stuff needs to be changed
     public double getDriveDistance() {
-        int ticks = 0; //mDriveMotor.getSelectedSensorPosition(0);
-        if (driveInverted)
-            ticks = -ticks;
+        // int ticks = 0; //mDriveMotor.getSelectedSensorPosition(0);
+        // if (driveInverted)
+        //     ticks = -ticks;
 
-        return encoderTicksToInches(ticks);
+        // return encoderTicksToInches(ticks);
+        return 0;
     }
 
     public CANSparkMax getDriveMotor() {
@@ -164,7 +163,6 @@ public class SwerveModule  {
 
         targetAngle %= 360;
 
-        SmartDashboard.putNumber("Module Target Angle " + moduleNumber, targetAngle % 360);
 
         targetAngle += mZeroOffset;
 
@@ -211,6 +209,9 @@ public class SwerveModule  {
 //        }
         mLastError = currentError;
         targetAngle *= 1024.0 / 360.0;
+        
+        SmartDashboard.putNumber("Module Target Angle " + moduleNumber, targetAngle % 360);
+
         mAngleMotor.set(ControlMode.Position, targetAngle);
     }
 
