@@ -149,7 +149,9 @@ public class SwerveModule  {
         return lastTargetAngle;
     }
 
-
+    /**
+     * @param targetAngle Set the target angle of the swerve module (in degrees)
+     */
     public void setTargetAngle(double targetAngle) {
 //    	if(angleMotorJam) {
 //    		mAngleMotor.set(ControlMode.Disabled, 0);

@@ -9,40 +9,50 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-
+/**
+ * This command drives the swerve drivetrain
+ */
 public class C_HolonomicDrive extends Command {
-	
+	private static final double DEAD_ZONE = 0.5;
 
 	public C_HolonomicDrive() {
 		requires(Robot.ss_holonomicdrivetrain);
 	}
-
+	/**
+	 * @param input
+	 * @return 0 if the controler input is less than DEAD_ZONE value
+	 */
 	private double deadband(double input) {
-		if (Math.abs(input) < 0.05) return 0;
+		if (Math.abs(input) < DEAD_ZONE) return 0;
 		return input;
 	}
-
+	
 	@Override
 	protected void initialize() {
 
 	}
 
+	/**
+	 * drives the swerve drivetrain based on the controler input values
+	 */
 	@Override
 	protected void execute() {
 
-		double forward = -Robot.getOI().getPrimaryController().getLeftYValue();
-		double strafe = Robot.getOI().getPrimaryController().getLeftXValue();
-		double rotation = -Robot.getOI().getPrimaryController().getRightXValue();
+		double forward = -Robot.getOI().getPrimaryController().getLeftYValue(); 
+		double strafe = Robot.getOI().getPrimaryController().getLeftXValue();	
+		double rotation = Robot.getOI().getPrimaryController().getRightXValue();
 
-		forward *= Math.abs(forward);
+	
+		forward *= Math.abs(forward); 
 		strafe *= Math.abs(strafe);
 		rotation *= Math.abs(rotation);
 
-		forward = deadband(forward);
-		strafe = deadband(strafe);
-		rotation = deadband(rotation);
+		forward = deadband(forward); 
+		strafe = deadband(strafe);	
+		rotation = deadband(rotation); 
 
-		SmartDashboard.putNumber("Forward", forward);
+		// puts values of forward, strafe and rotation to the SmartDashboard
+		SmartDashboard.putNumber("Forward", forward);  
 		SmartDashboard.putNumber("Strafe", strafe);
 		SmartDashboard.putNumber("Rotation", rotation);
 
@@ -51,7 +61,7 @@ public class C_HolonomicDrive extends Command {
 
 		// TalonSRX testt = new TalonSRX(RobotMap.getAngleMotors(3));
 		// testt.set( ControlMode.MotionMagic.Velocity, .3);
-		Robot.ss_holonomicdrivetrain.holonomicDrive(forward, strafe, rotation);
+		Robot.ss_holonomicdrivetrain.holonomicDrive(forward, strafe, rotation); 
 	}
 
 	@Override
