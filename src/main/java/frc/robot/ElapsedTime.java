@@ -8,7 +8,7 @@
 package frc.robot;
 
 /**
- * Add your docs here.
+ * creates a timer class (basically)
  */
 public final class ElapsedTime {
     private long time = 0;

@@ -26,7 +26,9 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
 
   
-
+  /**
+   * initializes Oi and ss_holonomicdrivetrains
+   */
   @Override
   public void robotInit() {
     m_oi = new OI(this);
