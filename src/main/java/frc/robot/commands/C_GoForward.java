@@ -32,9 +32,11 @@ public class C_GoForward extends Command {
   @Override
   protected void initialize() {
     timer.reset();
+
     speed *= Math.abs(speed);
     speed = deadband(speed);
     SmartDashboard.putNumber("Forward", speed);
+    
     Robot.ss_holonomicdrivetrain.holonomicDrive(speed, 0, 0);
   }
 

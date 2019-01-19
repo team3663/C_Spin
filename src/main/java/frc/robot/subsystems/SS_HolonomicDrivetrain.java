@@ -39,15 +39,15 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     public static final double WIDTH = 21;  // Swerve bot: 20 Comp bot: 37
     public static final double LENGTH = 21; // Swerve bot: 19 Comp bot: 32
 
-	private double mAdjustmentAngle = 0;
-	private boolean mFieldOriented = true;
+	private double adjustmentAngle = 0;
+	private boolean fieldOriented = true;
 
 	private final double width = 14.5;
 	private final double length = 14.5;
 	private double speedMultiplier = 1;
 
-    private SwerveModule[] mSwerveModules;
-    private AHRS mNavX = new AHRS(Port.kUSB);
+    private SwerveModule[] swerveModules;
+    private AHRS navX = new AHRS(Port.kUSB);
 
 
     public SS_HolonomicDrivetrain() { 
@@ -62,15 +62,15 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         SmartDashboard.putNumber("Back Right", BR);
         SmartDashboard.putNumber("Back Left", BL);
 
-        mSwerveModules = new SwerveModule[]  {
+        swerveModules = new SwerveModule[]  {
             new SwerveModule(0, new TalonSRX(RobotMap.getAngleMotors(0)), new CANSparkMax(RobotMap.getDriveMotors(0), MotorType.kBrushless), FR),
             new SwerveModule(1, new TalonSRX(RobotMap.getAngleMotors(1)), new CANSparkMax(RobotMap.getDriveMotors(1), MotorType.kBrushless), FL),
             new SwerveModule(2, new TalonSRX(RobotMap.getAngleMotors(2)), new CANSparkMax(RobotMap.getDriveMotors(2), MotorType.kBrushless), BL),
             new SwerveModule(3, new TalonSRX(RobotMap.getAngleMotors(3)), new CANSparkMax(RobotMap.getDriveMotors(3), MotorType.kBrushless), BR),
         };
-        mSwerveModules[3].setDriveInverted(true);
+        swerveModules[3].setDriveInverted(true);
     
-        for (SwerveModule module : mSwerveModules) {
+        for (SwerveModule module : swerveModules) {
             //module.setTargetAngle(0);
             module.setDriveGearRatio(5.7777);
             module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
@@ -88,14 +88,14 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     }
 
     public void stopDriveMotors() {
-        for (SwerveModule module : mSwerveModules) {
+        for (SwerveModule module : swerveModules) {
             module.setTargetSpeed(0);
         }
     }
     
     public void resetMotors() {
-    	for(int i = 0; i < mSwerveModules.length; i++) {
-    		mSwerveModules[i].resetMotor();
+    	for(int i = 0; i < swerveModules.length; i++) {
+    		swerveModules[i].resetMotor();
     	}
     }
 
@@ -152,11 +152,11 @@ public class SS_HolonomicDrivetrain extends Subsystem {
             if (Math.abs(forward) > 0.05 ||
                     Math.abs(strafe) > 0.05 ||
                     Math.abs(rotation) > 0.05) {
-                mSwerveModules[i].setTargetAngle(angles[i] + 180);
+                swerveModules[i].setTargetAngle(angles[i] + 180);
             } else {
-                mSwerveModules[i].setTargetAngle(mSwerveModules[i].getTargetAngle());
+                swerveModules[i].setTargetAngle(swerveModules[i].getTargetAngle());
             }
-            mSwerveModules[i].setTargetSpeed(speeds[i]);
+            swerveModules[i].setTargetSpeed(speeds[i]);
         }
     }
 
@@ -189,18 +189,18 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 
 	public boolean isFieldOriented() {
-		return mFieldOriented;
+		return fieldOriented;
     }
     
     public AHRS getNavX() {
-        return mNavX;
+        return navX;
     }
 
     /**
      * @return The gyro angle in degrees
      */
     public double getGyroAngle() {
-        double angle = mNavX.getAngle() - getAdjustmentAngle();
+        double angle = navX.getAngle() - getAdjustmentAngle();
         angle %= 360;
         if (angle < 0) angle += 360;
 
@@ -212,11 +212,11 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     }
 
     public double getGyroRate() {
-        return mNavX.getRate();
+        return navX.getRate();
     }
 
     public double getRawGyroAngle() {
-        double angle = mNavX.getAngle();
+        double angle = navX.getAngle();
         angle %= 360;
         if (angle < 0) angle += 360;
 
@@ -224,11 +224,11 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     }
 
     public SwerveModule getSwerveModule(int i) {
-        return mSwerveModules[i];
+        return swerveModules[i];
     }
 
     public SwerveModule[] getSwerveModules() {
-        return mSwerveModules;
+        return swerveModules;
     }
 
     public final double getWidth() {
@@ -252,17 +252,17 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     }
 
 	public double getAdjustmentAngle() {
-		return mAdjustmentAngle;
+		return adjustmentAngle;
     }
     
 
     public void setAdjustmentAngle(double adjustmentAngle) {
 		System.out.printf("New Adjustment Angle: % .3f\n", adjustmentAngle);
-		mAdjustmentAngle = adjustmentAngle;
+		adjustmentAngle = adjustmentAngle;
 	}
 
 	public void setFieldOriented(boolean fieldOriented) {
-		mFieldOriented = fieldOriented;
+		fieldOriented = fieldOriented;
     }
     
     public void setSpeedMultiplier(double speed) {
