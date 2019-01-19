@@ -235,10 +235,10 @@ public class SwerveModule  {
     }
 
     public void setTargetSpeed(double speed) {
-//    	if(angleMotorJam) {
-//    		mDriveMotor.set(ControlMode.Disabled, 0);
-//    		return;
-//    	}
+   	// if(angleMotorJam) {
+   	// 	mDriveMotor.set(ControlMode.Disabled, 0);
+   	// 	return;
+   	// }
         if (driveInverted) speed = -speed;
 
         mDriveMotor.set(speed);
