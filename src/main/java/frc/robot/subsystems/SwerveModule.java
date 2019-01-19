@@ -27,18 +27,17 @@ public class SwerveModule  {
     private final TalonSRX mAngleMotor;
     private final CANSparkMax mDriveMotor;
 
-
     private boolean driveInverted = false;
     private double driveGearRatio = 1;
     private double driveWheelRadius = 2;
     private boolean angleMotorJam = false;
+
 
     public SwerveModule(int moduleNumber, TalonSRX angleMotor, CANSparkMax driveMotor, double zeroOffset) {
         this.moduleNumber = moduleNumber;
 
         mAngleMotor = angleMotor;
         mDriveMotor = driveMotor;
-
         mZeroOffset = zeroOffset;
 
         angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
@@ -47,7 +46,6 @@ public class SwerveModule  {
         angleMotor.config_kI(0, 0.001, 0);
         angleMotor.config_kD(0, 200, 0);
         angleMotor.setNeutralMode(NeutralMode.Brake);
-        
         
         angleMotor.set(ControlMode.Position, 0);
 
@@ -60,8 +58,6 @@ public class SwerveModule  {
         driveMotor.getPIDController().setD(.1);
         driveMotor.getPIDController().setFF(.2);
 
-        
-
         // Set amperage limits
         angleMotor.configContinuousCurrentLimit(30, 0);
         angleMotor.configPeakCurrentLimit(30, 0);
@@ -70,6 +66,21 @@ public class SwerveModule  {
 
         driveMotor.setSmartCurrentLimit(25);
 
+    	SmartDashboard.putBoolean("Motor Jammed" + moduleNumber, angleMotorJam);
+    }
+
+    public void robotDisabledInit() {
+        mStallTimeBegin = Long.MAX_VALUE;
+    }
+
+    public void zeroDistance() {
+        
+        mDriveMotor.getEncoder().getPosition();
+    }
+    
+    public void resetMotor() {
+    	angleMotorJam = false;
+    	mStallTimeBegin = Long.MAX_VALUE;
     	SmartDashboard.putBoolean("Motor Jammed" + moduleNumber, angleMotorJam);
     }
 
@@ -96,6 +107,11 @@ public class SwerveModule  {
         return 0;
     }
 
+    
+    public double getDriveWheelRadius() {
+        return driveWheelRadius;
+    }
+
     public TalonSRX getAngleMotor() {
         return mAngleMotor;
     }
@@ -113,7 +129,6 @@ public class SwerveModule  {
 
         return angle;
     }
-
 
     //distance stuff needs to be changed
     public double getDriveDistance() {
@@ -134,32 +149,13 @@ public class SwerveModule  {
         return lastTargetAngle;
     }
 
-    public void robotDisabledInit() {
-        mStallTimeBegin = Long.MAX_VALUE;
-    }
-
-    public void setDriveGearRatio(double ratio) {
-        driveGearRatio = ratio;
-    }
-
-    public void setDriveInverted(boolean inverted) {
-        driveInverted = inverted;
-    }
-
-    public double getDriveWheelRadius() {
-        return driveWheelRadius;
-    }
-
-    public void setDriveWheelRadius(double radius) {
-        driveWheelRadius = radius;
-    }
 
     public void setTargetAngle(double targetAngle) {
 //    	if(angleMotorJam) {
 //    		mAngleMotor.set(ControlMode.Disabled, 0);
 //    		return;
 //    	}
-    	
+        
         lastTargetAngle = targetAngle;
 
         targetAngle %= 360;
@@ -214,6 +210,18 @@ public class SwerveModule  {
         SmartDashboard.putNumber("Module Target Angle " + moduleNumber, targetAngle % 360);
 
         mAngleMotor.set(ControlMode.Position, targetAngle);
+    }        
+
+    public void setDriveWheelRadius(double radius) {
+        driveWheelRadius = radius;
+    }
+
+    public void setDriveGearRatio(double ratio) {
+        driveGearRatio = ratio;
+    }
+
+    public void setDriveInverted(boolean inverted) {
+        driveInverted = inverted;
     }
 
     public void setTargetDistance(double distance) {
@@ -242,18 +250,5 @@ public class SwerveModule  {
         if (driveInverted) speed = -speed;
 
         mDriveMotor.set(speed);
-
     }
-
-    public void zeroDistance() {
-        
-        mDriveMotor.getEncoder().getPosition();
-    }
-    
-    public void resetMotor() {
-    	angleMotorJam = false;
-    	mStallTimeBegin = Long.MAX_VALUE;
-    	SmartDashboard.putBoolean("Motor Jammed" + moduleNumber, angleMotorJam);
-    }
-
 }
