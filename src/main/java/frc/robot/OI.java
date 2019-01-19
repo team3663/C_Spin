@@ -22,9 +22,12 @@ public class OI {
     public void registerControls() {
         
 
-        primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(mRobot.getDrivetrain(), false));
-        primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented(mRobot.getDrivetrain(), true));
+        primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(false));
+        primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented( true));
         primaryController.getStartButton().whenPressed(new C_HolonomicDrive());
+        primaryController.getRightBumperButton().whenPressed(new C_SlowDrivetrain(.2));
+        primaryController.getRightBumperButton().whenReleased(new C_SlowDrivetrain(1));
+
         
     }
 

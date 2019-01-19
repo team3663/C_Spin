@@ -41,7 +41,11 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	public double getSpeedMultiplier() {
 		return speedMultiplier;
-	}
+    }
+    
+    public void setSpeedMultiplier( double speed){
+        speedMultiplier = speed;
+    }
 
     public double getMaxAcceleration() {
         return 5.5;
@@ -54,11 +58,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	public double getAdjustmentAngle() {
 		return mAdjustmentAngle;
-	}
-
-
-	public void holonomicDrive(double forward, double strafe, double rotation) {
-		holonomicDrive(forward, strafe, rotation, isFieldOriented());
 	}
 
 	@Override
@@ -121,7 +120,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
         double FL = 148; //front right
         double FR = 10; //fronnt left
-        double BL = 65; //back right
+        double BL = 39; //back right
         double BR = 32; //back left
         SmartDashboard.putNumber("Front Right", FR);
         SmartDashboard.putNumber("Front Left", FL);
@@ -138,7 +137,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
             new SwerveModule(3, new TalonSRX(RobotMap.getAngleMotors(3)), new CANSparkMax(RobotMap.getDriveMotors(3), MotorType.kBrushless), BR),
         };
         mSwerveModules[3].setDriveInverted(true);
-    
+        mSwerveModules[0].setDriveInverted(true);    
         
 
         for (SwerveModule module : mSwerveModules) {
@@ -203,9 +202,11 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         return mSwerveModules[i];
     }
 
-    public void holonomicDrive(double forward, double strafe, double rotation, boolean fieldOriented) {
+    public void holonomicDrive(double forward, double strafe, double rotation) {
         forward *= getSpeedMultiplier();
         strafe *= getSpeedMultiplier();
+
+        boolean fieldOriented = isFieldOriented();
 
         if (fieldOriented) {
             double angleRad = Math.toRadians(getGyroAngle());

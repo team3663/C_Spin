@@ -53,6 +53,7 @@ public class SwerveModule  {
 
         driveMotor.setControlFramePeriod(10);
         driveMotor.setIdleMode(IdleMode.kBrake);
+        driveMotor.setRampRate(1);
 
         driveMotor.getPIDController().setP(15);
         driveMotor.getPIDController().setI(.01);

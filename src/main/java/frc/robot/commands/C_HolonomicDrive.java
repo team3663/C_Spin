@@ -42,6 +42,7 @@ public class C_HolonomicDrive extends Command {
 		double strafe = Robot.getOI().getPrimaryController().getLeftXValue();	
 		double rotation = Robot.getOI().getPrimaryController().getRightXValue();
 
+	
 		forward *= Math.abs(forward); 
 		strafe *= Math.abs(strafe);
 		rotation *= Math.abs(rotation);
