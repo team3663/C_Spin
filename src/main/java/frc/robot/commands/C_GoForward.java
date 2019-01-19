@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.ElapsedTime;
 import frc.robot.Robot;
 
-
-
-
+/**
+ * moves drivetrain forward for certain time
+ */
 public class C_GoForward extends Command {
   private final ElapsedTime timer = new ElapsedTime();
   double speed = -.5;
@@ -23,6 +23,7 @@ public class C_GoForward extends Command {
     requires(Robot.ss_holonomicdrivetrain);
     this.sec = sec;
   }
+  
 	private double deadband(double input) {
 		if (Math.abs(input) < 0.05) return 0;
 		return input;

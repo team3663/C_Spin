@@ -9,9 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
+/**
+ * slows drivetrain
+ */
 public class C_SlowDrivetrain extends Command {
   private double mSpeed;
+  
   public C_SlowDrivetrain(double speed) {
     mSpeed = speed;
 
