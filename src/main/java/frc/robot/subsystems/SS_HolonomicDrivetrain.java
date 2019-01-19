@@ -33,7 +33,6 @@ import frc.robot.RobotMap;
 import frc.robot.commands.C_HolonomicDrive;
 
 public class SS_HolonomicDrivetrain extends Subsystem {
-
     public static final double WHEELBASE = 14.5;  // Swerve bot: 14.5 Comp bot: 20.5
     public static final double TRACKWIDTH = 14.5; // Swerve bot: 13.5 Comp bot: 25.5
 
@@ -265,5 +264,9 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	public void setFieldOriented(boolean fieldOriented) {
 		mFieldOriented = fieldOriented;
-	}
+    }
+    
+    public void setSpeedMultiplier(double speed) {
+        speedMultiplier = speed;
+    }
 }
