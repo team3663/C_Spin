@@ -7,15 +7,15 @@ import frc.robot.subsystems.SS_HolonomicDrivetrain;
  */
 
 public class C_ZeroDrivetrainGyro extends Command {
-	private SS_HolonomicDrivetrain mDrivetrain;
+	private SS_HolonomicDrivetrain drivetrain;
 
 	public C_ZeroDrivetrainGyro(SS_HolonomicDrivetrain drivetrain) {
-		mDrivetrain = drivetrain;
+		this.drivetrain = drivetrain;
 	}
 
 	@Override
 	public void execute() {
-		mDrivetrain.zeroGyro();
+		drivetrain.zeroGyro();
 	}
 
 	@Override

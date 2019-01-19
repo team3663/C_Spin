@@ -10,17 +10,17 @@ import frc.robot.subsystems.SS_HolonomicDrivetrain;
 
 public final class C_SetFieldOriented extends Command {
 
-    private boolean mField;
+    private boolean field;
 
     @Deprecated
     public C_SetFieldOriented(boolean field) {
         requires(Robot.ss_holonomicdrivetrain);
-        mField = field;
+        this.field = field;
     }
 
     @Override
     protected void execute() {
-        Robot.ss_holonomicdrivetrain.setFieldOriented(mField);
+        Robot.ss_holonomicdrivetrain.setFieldOriented(field);
     }
 
     @Override

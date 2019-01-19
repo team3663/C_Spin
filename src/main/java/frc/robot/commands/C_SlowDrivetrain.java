@@ -13,17 +13,17 @@ import frc.robot.Robot;
  * slows drivetrain
  */
 public class C_SlowDrivetrain extends Command {
-  private double mSpeed;
+  private double speed;
   
   public C_SlowDrivetrain(double speed) {
-    mSpeed = speed;
+    this.speed = speed;
 
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.ss_holonomicdrivetrain.setSpeedMultiplier(mSpeed);
+    Robot.ss_holonomicdrivetrain.setSpeedMultiplier(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
