@@ -16,16 +16,16 @@ import frc.robot.Robot;
 public class SwerveModule  {
     private static final long STALL_TIMEOUT = 2000;
 
-    private long mStallTimeBegin = Long.MAX_VALUE;
+    private long stallTimeBegin = Long.MAX_VALUE;
 
-    private double mLastError = 0, lastTargetAngle = 0;
+    private double lastError = 0, lastTargetAngle = 0;
 
     private final int moduleNumber;
 
-    private final double mZeroOffset;
+    private final double zeroOffset;
 
-    private final TalonSRX mAngleMotor;
-    private final CANSparkMax mDriveMotor;
+    private final TalonSRX angleMotor;
+    private final CANSparkMax driveMotor;
 
     private boolean driveInverted = false;
     private double driveGearRatio = 1;
@@ -36,9 +36,9 @@ public class SwerveModule  {
     public SwerveModule(int moduleNumber, TalonSRX angleMotor, CANSparkMax driveMotor, double zeroOffset) {
         this.moduleNumber = moduleNumber;
 
-        mAngleMotor = angleMotor;
-        mDriveMotor = driveMotor;
-        mZeroOffset = zeroOffset;
+        this.angleMotor = angleMotor;
+        this.driveMotor = driveMotor;
+        this.zeroOffset = zeroOffset;
 
         angleMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
         angleMotor.setSensorPhase(true);
@@ -70,17 +70,17 @@ public class SwerveModule  {
     }
 
     public void robotDisabledInit() {
-        mStallTimeBegin = Long.MAX_VALUE;
+        stallTimeBegin = Long.MAX_VALUE;
     }
 
     public void zeroDistance() {
         
-        mDriveMotor.getEncoder().getPosition();
+        driveMotor.getEncoder().getPosition();
     }
     
     public void resetMotor() {
     	angleMotorJam = false;
-    	mStallTimeBegin = Long.MAX_VALUE;
+    	stallTimeBegin = Long.MAX_VALUE;
     	SmartDashboard.putBoolean("Motor Jammed" + moduleNumber, angleMotorJam);
     }
 
@@ -113,7 +113,7 @@ public class SwerveModule  {
     }
 
     public TalonSRX getAngleMotor() {
-        return mAngleMotor;
+        return angleMotor;
     }
 
     /**
@@ -122,8 +122,8 @@ public class SwerveModule  {
      * @return An angle in the range [0, 360)
      */
     public double getCurrentAngle() {
-        double angle = mAngleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
-        angle -= mZeroOffset;
+        double angle = angleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
+        angle -= zeroOffset;
         angle %= 360;
         if (angle < 0) angle += 360;
 
@@ -141,7 +141,7 @@ public class SwerveModule  {
     }
 
     public CANSparkMax getDriveMotor() {
-        return mDriveMotor;
+        return driveMotor;
         
     }
 
@@ -163,9 +163,9 @@ public class SwerveModule  {
         targetAngle %= 360;
 
 
-        targetAngle += mZeroOffset;
+        targetAngle += zeroOffset;
 
-        double currentAngle = mAngleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
+        double currentAngle = angleMotor.getSelectedSensorPosition(0) * (360.0 / 1024.0);
         double currentAngleMod = currentAngle % 360;
         if (currentAngleMod < 0) currentAngleMod += 360;
 
@@ -183,14 +183,14 @@ public class SwerveModule  {
                 targetAngle += 180;
             else if (delta < -90)
                 targetAngle -= 180;
-            mDriveMotor.setInverted(false);
+            driveMotor.setInverted(false);
         } else {
-            mDriveMotor.setInverted(true);
+            driveMotor.setInverted(true);
         }
 
         targetAngle += currentAngle - currentAngleMod;
 
-        double currentError = mAngleMotor.getClosedLoopError(0);
+        double currentError = angleMotor.getClosedLoopError(0);
 //        if (Math.abs(currentError - mLastError) < 7.5 &&
 //                Math.abs(currentAngle - targetAngle) > 5) {
 //            if (mStallTimeBegin == Long.MAX_VALUE) {
@@ -206,12 +206,12 @@ public class SwerveModule  {
 //        } else {
 //            mStallTimeBegin = Long.MAX_VALUE;
 //        }
-        mLastError = currentError;
+        lastError = currentError;
         targetAngle *= 1024.0 / 360.0;
         
         SmartDashboard.putNumber("Module Target Angle " + moduleNumber, targetAngle % 360);
 
-        mAngleMotor.set(ControlMode.Position, targetAngle);
+        angleMotor.set(ControlMode.Position, targetAngle);
     }        
 
     public void setDriveWheelRadius(double radius) {
@@ -241,7 +241,7 @@ public class SwerveModule  {
 
         SmartDashboard.putNumber("Module Ticks " + moduleNumber, distance);
 
-        mDriveMotor.set(distance);
+        driveMotor.set(distance);
     }
 
     public void setTargetSpeed(double speed) {
@@ -251,6 +251,6 @@ public class SwerveModule  {
    	// }
         if (driveInverted) speed = -speed;
 
-        mDriveMotor.set(speed);
+        driveMotor.set(speed);
     }
 }
