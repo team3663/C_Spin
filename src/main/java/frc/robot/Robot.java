@@ -8,7 +8,6 @@
 package frc.robot;
 
 
-import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,14 +15,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.C_HolonomicDrive;
-import frc.robot.subsystems.SS_HolonomicDrivetrain;
+import frc.robot.subsystems.*;
 
 
 public class Robot extends TimedRobot {
   public static final boolean PRACTICE_BOT = true;
 
-  public static SS_HolonomicDrivetrain ss_holonomicdrivetrain;
-  public static OI m_oi;
+  private static SS_HolonomicDrivetrain ss_holonomicdrivetrain;
+  private static OI m_oi;
+
+  private static SS_Vision ss_Vision; 
 
   
 
@@ -31,6 +32,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI(this);
     ss_holonomicdrivetrain = new SS_HolonomicDrivetrain();
+
+    ss_Vision = new SS_Vision();
 
 
 		m_oi.registerControls();
@@ -47,6 +50,10 @@ public class Robot extends TimedRobot {
   
   public static SS_HolonomicDrivetrain getDrivetrain() {
 		return ss_holonomicdrivetrain;///
+  }
+
+  public static SS_Vision getVision() {
+    return ss_Vision;
   }
 
   /**

@@ -14,7 +14,7 @@ public class C_HolonomicDrive extends Command {
 	
 
 	public C_HolonomicDrive() {
-		requires(Robot.ss_holonomicdrivetrain);
+		requires(Robot.getDrivetrain());
 	}
 
 	private double deadband(double input) {
@@ -51,12 +51,12 @@ public class C_HolonomicDrive extends Command {
 
 		// TalonSRX testt = new TalonSRX(RobotMap.getAngleMotors(3));
 		// testt.set( ControlMode.MotionMagic.Velocity, .3);
-		Robot.ss_holonomicdrivetrain.holonomicDrive(forward, strafe, rotation);
+		Robot.getDrivetrain().holonomicDrive(forward, strafe, rotation);
 	}
 
 	@Override
 	protected void end() {
-		Robot.ss_holonomicdrivetrain.stopDriveMotors();
+		Robot.getDrivetrain().stopDriveMotors();
 	}
 
 	@Override

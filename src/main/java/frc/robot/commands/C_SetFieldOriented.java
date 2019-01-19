@@ -11,13 +11,13 @@ public final class C_SetFieldOriented extends Command {
 
     @Deprecated
     public C_SetFieldOriented(boolean field) {
-        requires(Robot.ss_holonomicdrivetrain);
+        requires(Robot.getDrivetrain());
         mField = field;
     }
 
     @Override
     protected void execute() {
-        Robot.ss_holonomicdrivetrain.setFieldOriented(mField);
+        Robot.getDrivetrain().setFieldOriented(mField);
     }
 
     @Override
