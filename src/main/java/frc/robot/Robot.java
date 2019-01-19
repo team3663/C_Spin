@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
   public static final boolean PRACTICE_BOT = true;
 
   public static SS_HolonomicDrivetrain ss_holonomicdrivetrain;
-  public static OI m_oi;
+  public static OI oi;
 
   
   /**
@@ -31,11 +31,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_oi = new OI(this);
+    oi = new OI(this);
     ss_holonomicdrivetrain = new SS_HolonomicDrivetrain();
 
 
-		m_oi.registerControls();
+		oi.registerControls();
     // chooser.addOption("My Auto", new MyAutoCommand());
     
 
@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
   }
 
   public static OI getOI() {
-		return m_oi;
+		return oi;
   }
 
   
@@ -61,9 +61,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    SmartDashboard.putBoolean("TEST " , m_oi.getPrimaryController().getAButton().get());
+    SmartDashboard.putBoolean("TEST " , oi.getPrimaryController().getAButton().get());
 
-		m_oi.registerControls();
+		oi.registerControls();
 
 
     for (int i = 0; i < 4; i++) {

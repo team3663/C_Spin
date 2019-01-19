@@ -13,20 +13,25 @@ package frc.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  */
-public class RobotMap {
-   
-	/*
-	 * 0 is Front Right
-	 * 1 is Front Left
-	 * 2 is Back Left
-	 * 3 is Back Right
-   * 
+
+/*
+    * 0 is Front Right
+    * 1 is Front Left
+    * 2 is Back Left
+    * 3 is Back Right
+    * 
     *   front
     * 0------1
     * |      |
     * |      |
     * 3------2
-	 */
+ */
+public class RobotMap {
+  public static final int ELEVATOR_MASTER_MOTOR = 28;
+  public static final int ELEVATOR_SLAVE_MOTOR = 27;
+
+  public static final int CARRIAGE_LEFT_MOTOR = 21;
+  public static final int CARRIAGE_RIGHT_MOTOR = 22;
 
   public static final int getDriveMotors(int module){
     int motors[] = {0,4,7,3};
@@ -40,14 +45,4 @@ public class RobotMap {
     return  motor;
     
   }
-
-
-  	public static final int ELEVATOR_MASTER_MOTOR = 28;
-  	public static final int ELEVATOR_SLAVE_MOTOR = 27;
-
-    public static final int CARRIAGE_LEFT_MOTOR = 21;
-    public static final int CARRIAGE_RIGHT_MOTOR = 22;
- 
-
-  
 }
