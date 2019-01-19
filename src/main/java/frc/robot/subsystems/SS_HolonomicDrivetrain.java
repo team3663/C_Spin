@@ -78,23 +78,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         // holonomicDrive(0, 0, .4);
     }
 
-<<<<<<< HEAD
-=======
-    public double[] calculateSwerveModuleAngles(double forward, double strafe, double rotation) {
-        if (isFieldOriented()) {
-            double angleRad = Math.toRadians(getGyroAngle());
-            double temp = forward * Math.cos(angleRad) + strafe * Math.sin(angleRad);
-            strafe = -forward * Math.sin(angleRad) + strafe * Math.cos(angleRad);
-            forward = temp;
-            
-        }
-
-        double a = strafe - rotation * (WHEELBASE / TRACKWIDTH);
-        double b = strafe + rotation * (WHEELBASE / TRACKWIDTH);
-        double c = forward - rotation * (TRACKWIDTH / WHEELBASE);
-        double d = forward + rotation * (TRACKWIDTH / WHEELBASE);
->>>>>>> 588fc61be9c6e892867553b8ea883823dfaf67a0
-
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new C_HolonomicDrive());
