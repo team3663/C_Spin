@@ -2,6 +2,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.SS_HolonomicDrivetrain;
+/**
+ * sets field orientation
+ */
 
 public final class C_SetFieldOriented extends Command {
 

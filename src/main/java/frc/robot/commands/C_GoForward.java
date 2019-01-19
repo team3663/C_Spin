@@ -19,7 +19,7 @@ public class C_GoForward extends Command {
   double speed = -.5;
   int sec;
 
-  public C_GoForward(int sec, double speed) {
+  public C_GoForward(int sec) {
     requires(Robot.ss_holonomicdrivetrain);
     this.sec = sec;
   }

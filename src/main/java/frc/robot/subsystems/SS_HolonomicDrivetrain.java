@@ -155,6 +155,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
             double temp = forward * Math.cos(angleRad) + strafe * Math.sin(angleRad);
             strafe = -forward * Math.sin(angleRad) + strafe * Math.cos(angleRad);
             forward = temp;
+            
         }
 
         double a = strafe - rotation * (WHEELBASE / TRACKWIDTH);
@@ -209,7 +210,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         if (fieldOriented) {
             double angleRad = Math.toRadians(getGyroAngle());
             double temp = forward * Math.cos(angleRad) +
-                    strafe * Math.sin(angleRad);
+            strafe * Math.sin(angleRad);
             strafe = -forward * Math.sin(angleRad) + strafe * Math.cos(angleRad);
             forward = temp;
         }
