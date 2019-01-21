@@ -8,7 +8,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.ElapsedTime;
+import frc.robot.util.ElapsedTime;
 import frc.robot.Robot;
 
 /**
@@ -19,29 +19,34 @@ public class C_GoForward extends Command {
   double speed = -.5;
   int sec;
 
-  public C_GoForward(int sec) {
+  /**
+   * moves drivetrain forward for a certian time
+   * @param sec how long it will move forward for
+   */
+  public C_GoForward(int sec ) {
     requires(Robot.ss_holonomicdrivetrain);
     this.sec = sec;
+  } 
+  /**
+   * second constructor to modify speed
+   * @param sec how long it will move forward for
+   * @param speed how fast it will run
+   */
+   public C_GoForward(int sec , double speed) {
+    requires(Robot.ss_holonomicdrivetrain);
+    this.sec = sec;
+    this.speed = speed;
   }
-  
-	private double deadband(double input) {
-		if (Math.abs(input) < 0.05) return 0;
-		return input;
-	}
-  // Called just before this Command runs the first time
   @Override
   protected void initialize() {
     timer.reset();
 
     speed *= Math.abs(speed);
-    speed = deadband(speed);
     SmartDashboard.putNumber("Forward", speed);
     
     Robot.ss_holonomicdrivetrain.holonomicDrive(speed, 0, 0);
   }
 
-  // Called repeatedly when this Command is scheduled to run
-  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     if(timer.getElapsedSeconds() >= sec){
@@ -51,7 +56,6 @@ public class C_GoForward extends Command {
 
   }
 
-  // Called once after isFinished returns true
   @Override
   protected void end() {
     Robot.ss_holonomicdrivetrain.stopDriveMotors();

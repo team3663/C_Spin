@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.util;
 
 /**
  * Measures elapsed time.
