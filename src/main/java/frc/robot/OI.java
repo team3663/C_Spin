@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.robot.commands.*;
-import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
 
 
@@ -11,12 +10,12 @@ import frc.robot.input.XboxGamepad;
  */
 public class OI {
 
-    private IGamepad primaryController = new XboxGamepad(0);
+    private XboxGamepad primaryController = new XboxGamepad(0);
 
-    private Robot mRobot;
+    private Robot robot;
 
     public OI(Robot robot) {
-        mRobot = robot;
+        this.robot = robot;
     }
 
     public void registerControls() {
@@ -31,7 +30,7 @@ public class OI {
         
     }
 
-    public IGamepad getPrimaryController() {
+    public XboxGamepad getPrimaryController() {
         return primaryController;
     }
 

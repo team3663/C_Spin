@@ -18,10 +18,31 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * @since 1.0
  */
 
-public final class XboxGamepad extends Joystick implements IGamepad {
+public final class XboxGamepad extends Joystick {
 	
+	public enum Direction {
+		UP(0),
+		UPRIGHT(45),
+		RIGHT(90),
+		DOWNRIGHT(135),
+		DOWN(180),
+		DOWNLEFT(225),
+		LEFT(270),
+		UPLEFT(315),
+		CENTER(-1);
+
+		private final int mAngle;
+
+		Direction(int angle) {
+			mAngle = angle;
+		}
+
+		public int getAngle() {
+			return mAngle;
+		}
+	}
 	
-	private final Button[] mButtons = {
+	private final Button[] buttons = {
 			new JoystickButton(this, 1), // A Button
 			new JoystickButton(this, 2), // B Button
 			new JoystickButton(this, 3), // X Button
@@ -36,7 +57,7 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 			new AxisButton(this, 3,0.75), // Right Trigger Button
 	};
 
-	private final DPadButton[] mDPadButtons;
+	private final DPadButton[] dPadButtons;
 
 	/**
 	 * @param port The port the controller is on
@@ -44,10 +65,10 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 	public XboxGamepad(int port) {
 		super(port);
 
-		mDPadButtons = new DPadButton[DPadButton.Direction.values().length];
+		dPadButtons = new DPadButton[DPadButton.Direction.values().length];
 
 		for (DPadButton.Direction dir : DPadButton.Direction.values()) {
-			mDPadButtons[dir.ordinal()] = new DPadButton(this, dir);
+			dPadButtons[dir.ordinal()] = new DPadButton(this, dir);
 		}
 	}
 
@@ -76,54 +97,54 @@ public final class XboxGamepad extends Joystick implements IGamepad {
 	}
 
 	public Button getAButton() {
-		return mButtons[0];
+		return buttons[0];
 	}
 
 	public Button getBButton() {
-		return mButtons[1];
+		return buttons[1];
 	}
 
 	public Button getXButton() {
-		return mButtons[2];
+		return buttons[2];
 	}
 
 	public Button getYButton() {
-		return mButtons[3];
+		return buttons[3];
 	}
 
 	public Button getLeftBumperButton() {
-		return mButtons[4];
+		return buttons[4];
 	}
 
 	public Button getRightBumperButton() {
-		return mButtons[5];
+		return buttons[5];
 	}
 
 	public Button getBackButton() {
-		return mButtons[6];
+		return buttons[6];
 	}
 
 	public Button getStartButton() {
-		return mButtons[7];
+		return buttons[7];
 	}
 
 	public Button getLeftJoystickButton() {
-		return mButtons[8];
+		return buttons[8];
 	}
 
 	public Button getRightJoystickButton() {
-		return mButtons[9];
+		return buttons[9];
 	}
 
 	public Button getLeftTriggerButton() {
-		return mButtons[10];
+		return buttons[10];
 	}
 
 	public Button getRightTriggerButton() {
-		return mButtons[11];
+		return buttons[11];
 	}
 
 	public Button getDPadButton(DPadButton.Direction direction) {
-		return mDPadButtons[direction.ordinal()];
+		return dPadButtons[direction.ordinal()];
 	}
 }
