@@ -62,7 +62,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		//setDefaultCommand(new C_HolonomicDrive());
+		setDefaultCommand(new C_HolonomicDrive());
 	}
 
 	public boolean isFieldOriented() {
