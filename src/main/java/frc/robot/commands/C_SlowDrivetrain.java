@@ -23,7 +23,7 @@ public class C_SlowDrivetrain extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.ss_holonomicdrivetrain.setSpeedMultiplier(speed);
+    Robot.getDrivetrain().setSpeedMultiplier(speed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

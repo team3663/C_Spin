@@ -16,7 +16,7 @@ public class C_HolonomicDrive extends Command {
 	private static final double DEAD_ZONE = 0.5;
 
 	public C_HolonomicDrive() {
-		requires(Robot.ss_holonomicdrivetrain);
+		requires(Robot.getDrivetrain());
 	}
 	/**
 	 * @param input
@@ -61,12 +61,12 @@ public class C_HolonomicDrive extends Command {
 
 		// TalonSRX testt = new TalonSRX(RobotMap.getAngleMotors(3));
 		// testt.set( ControlMode.MotionMagic.Velocity, .3);
-		Robot.ss_holonomicdrivetrain.holonomicDrive(forward, strafe, rotation); 
+		Robot.getDrivetrain().holonomicDrive(forward, strafe, rotation); 
 	}
 
 	@Override
 	protected void end() {
-		Robot.ss_holonomicdrivetrain.stopDriveMotors();
+		Robot.getDrivetrain().stopDriveMotors();
 	}
 
 	@Override
