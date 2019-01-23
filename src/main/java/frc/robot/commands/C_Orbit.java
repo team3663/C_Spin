@@ -8,11 +8,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class C_CircleRadius extends Command {
-  public C_CircleRadius() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class C_Orbit extends Command {
+  private double radius;
+  private double speed;
+  public C_Orbit(double radius, double speed) {
+    requires(Robot.getDrivetrain());
+    this.radius = radius;
+    this.speed = speed;
   }
 
   // Called just before this Command runs the first time
@@ -23,6 +27,9 @@ public class C_CircleRadius extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double rotation = radius * 0.02 * speed;
+    Robot.getDrivetrain().holonomicDrive(0, speed, rotation);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -34,11 +41,13 @@ public class C_CircleRadius extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.ss_holonomicdrivetrain.stopDriveMotors();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

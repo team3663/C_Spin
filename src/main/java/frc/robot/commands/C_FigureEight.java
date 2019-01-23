@@ -9,11 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class FigureEight extends CommandGroup {
+public class C_FigureEight extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public FigureEight() {
+  public C_FigureEight() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
