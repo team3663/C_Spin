@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.C_Circle;
 import frc.robot.commands.C_HolonomicDrive;
 import frc.robot.subsystems.SS_HolonomicDrivetrain;
 
@@ -107,8 +108,8 @@ SmartDashboard.putNumber("Drivetrain Angle", ss_holonomicdrivetrain.getGyroAngle
    */
   @Override
   public void autonomousInit() {
-    
-  
+    C_Circle circleOne = new C_Circle(360, 1);
+    circleOne.start();
   }
 
   /**
