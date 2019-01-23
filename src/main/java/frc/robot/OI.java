@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.commands.*;
 import frc.robot.input.IGamepad;
 import frc.robot.input.XboxGamepad;
@@ -12,7 +13,7 @@ import frc.robot.input.XboxGamepad;
 public class OI {
 
     private IGamepad primaryController = new XboxGamepad(0);
-
+    private Joystick joystick= new Joystick(0);
     private Robot mRobot;
 
     public OI(Robot robot) {
@@ -21,7 +22,7 @@ public class OI {
 
     public void registerControls() {
         
-
+        
         primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(false));
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented( true));
         primaryController.getStartButton().whenPressed(new C_HolonomicDrive());
