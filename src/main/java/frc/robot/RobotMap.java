@@ -27,11 +27,8 @@ package frc.robot;
     * 3------2
  */
 public class RobotMap {
-  public static final int ELEVATOR_MASTER_MOTOR = 28;
-  public static final int ELEVATOR_SLAVE_MOTOR = 27;
 
-  public static final int CARRIAGE_LEFT_MOTOR = 21;
-  public static final int CARRIAGE_RIGHT_MOTOR = 22;
+  public static final int TEST = 20;
 
   public static final int getDriveMotors(int module){
     int motors[] = {0,4,7,3};

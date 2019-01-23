@@ -12,11 +12,9 @@ import frc.robot.input.XboxGamepad;
 public class OI {
 
     private IGamepad primaryController = new XboxGamepad(0);
-
-    private Robot mRobot;
-
-    public OI(Robot robot) {
-        mRobot = robot;
+    
+    public OI() {
+        
     }
 
     public void registerControls() {
@@ -24,9 +22,10 @@ public class OI {
 
         primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(false));
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented( true));
-        primaryController.getStartButton().whenPressed(new C_HolonomicDrive());
-        primaryController.getRightBumperButton().whenPressed(new C_SlowDrivetrain(.2));
+        primaryController.getStartButton().whenPressed(new C_ZeroDrivetrainGyro());
+        primaryController.getRightBumperButton().whenPressed(new C_SlowDrivetrain(.5));
         primaryController.getRightBumperButton().whenReleased(new C_SlowDrivetrain(1));
+
 
         
     }
