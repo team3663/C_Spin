@@ -34,10 +34,10 @@ public class SS_Climber extends Subsystem {
   public SS_Climber() {
     rearClimberMotor = new CANSparkMax(RobotMap.TEST, MotorType.kBrushless);
     PID = new CANPIDController(rearClimberMotor);
-    PID.setP(15);
+    PID.setP(2);
     PID.setI(0);
-    PID.setD(0);
-    PID.setOutputRange(-1, 1);
+    PID.setD(4);
+    PID.setOutputRange(-.5, .5);
   }
 
 
@@ -79,6 +79,28 @@ public class SS_Climber extends Subsystem {
 
   public void goToPos(double tick){
     rearClimberMotor.getPIDController().setReference(tick, ControlType.kPosition);
+  }
+
+  double shadowValue = 0;
+  int shadowCouner = 0;
+  double value = 0;
+  public double getErrorFreeEncoder(){
+    
+    if(getRawEncoder() != 0){
+      value = getRawEncoder();
+    }
+    else if (shadowValue == 0 && shadowCouner >= 3 ){
+      value = getRawEncoder();
+    }
+    else if (shadowValue == 0){
+      shadowCouner++;
+    }
+    shadowValue = getRawEncoder();
+    return value;
+  }
+
+  public double get(){
+    return rearClimberMotor.get();
   }
 
   @Override

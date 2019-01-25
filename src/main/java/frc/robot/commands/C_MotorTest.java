@@ -32,8 +32,9 @@ public class C_MotorTest extends Command {
   @Override
   protected void execute() {
     SmartDashboard.putNumber("Climber Encoder", climber.getRawEncoder());
+    SmartDashboard.putNumber("Climber set spd", climber.get());
     SmartDashboard.putNumber("Climber Angle", climber.getAngle());
-    climber.goToPos(105);
+    climber.goToPos(100);
     //climber.set(.1);
   }
 
