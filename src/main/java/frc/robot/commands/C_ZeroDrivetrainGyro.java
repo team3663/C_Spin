@@ -8,13 +8,16 @@ import frc.robot.subsystems.SS_HolonomicDrivetrain;
  */
 
 public class C_ZeroDrivetrainGyro extends Command {
-
+	SS_HolonomicDrivetrain drivetrain;
+	
 	public C_ZeroDrivetrainGyro() {
+		requires(Robot.getDrivetrain());
+		drivetrain = Robot.getDrivetrain();
 	}
 
 	@Override
 	public void execute() {
-		Robot.getDrivetrain().zeroGyro();
+		drivetrain.zeroGyro();
 	}
 
 	@Override

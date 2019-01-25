@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.SS_Climber;
 
@@ -30,7 +31,10 @@ public class C_MotorTest extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    climber.set(.5);
+    SmartDashboard.putNumber("Climber Encoder", climber.getRawEncoder());
+    SmartDashboard.putNumber("Climber Angle", climber.getAngle());
+    climber.goToPos(105);
+    //climber.set(.1);
   }
 
   // Make this return true when this Command no longer needs to run execute()

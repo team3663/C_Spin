@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,24 +29,24 @@ public class SS_Climber extends Subsystem {
 
   private double fakeEncoder = 0;
   private double speedMultiplier = 1;
-  private double TICKS_PER_DEGREE = 0; 
+  private double TICKS_PER_DEGREE = 210/360  ; 
 
   public SS_Climber() {
     rearClimberMotor = new CANSparkMax(RobotMap.TEST, MotorType.kBrushless);
     PID = new CANPIDController(rearClimberMotor);
-    PID.setP(1);
-    PID.setI(.01);
-    PID.setD(3);
+    PID.setP(15);
+    PID.setI(0);
+    PID.setD(0);
     PID.setOutputRange(-1, 1);
   }
 
 
   public double degreeToTicks(int degree){
-    return degree*TICKS_PER_DEGREE;
+    return degree/TICKS_PER_DEGREE;
   }
 
   public double ticksToDegrees(double ticks){
-    return ticks/TICKS_PER_DEGREE;
+    return ticks*TICKS_PER_DEGREE;
   }
 
   public double getRawEncoder(){
@@ -74,6 +75,10 @@ public class SS_Climber extends Subsystem {
 
   public void goToDegree(int degree){
 
+  }
+
+  public void goToPos(double tick){
+    rearClimberMotor.getPIDController().setReference(tick, ControlType.kPosition);
   }
 
   @Override
