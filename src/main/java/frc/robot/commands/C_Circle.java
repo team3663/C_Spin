@@ -16,17 +16,22 @@ public class C_Circle extends Command {
   private static double RADIUS_MULTIPLY = 0.5;
   private static double DEGREE_INCREASE = 0.1;
   
-  private double targetDegree;
+  private double arc;
   private double degree = 0;
   private int direction = 1;
+  private int reversed = 1;
 
   /**
-   * @param radius Radius of the circle in feet
+   * @param arc the arc that the robot needs to travel (in degress, negavive to left, positive to right)
+   * @param reversed wether the circle is reversed on the x axis
    */
-  public C_Circle(double targetDegree, int direction) {
+  public C_Circle(double arc, boolean reversed) {
     requires(Robot.getDrivetrain());
-    this.direction = direction;
-    this.targetDegree = targetDegree * 180 / Math.PI;
+    direction = (int)Math.signum(arc);
+    if(reversed) {
+      this.reversed = -1; 
+    }
+    this.arc = arc * 180 / Math.PI;
   }
 
   // Called just before this Command runs the first time
@@ -38,7 +43,7 @@ public class C_Circle extends Command {
   @Override
   protected void execute() {
 
-    double forward = Math.sin(degree) * RADIUS_MULTIPLY * direction;
+    double forward = Math.sin(degree) * RADIUS_MULTIPLY * direction * reversed;
     double strafe = Math.cos(degree) * RADIUS_MULTIPLY * direction;
     Robot.getDrivetrain().holonomicDrive(forward, strafe, 0);
     degree += DEGREE_INCREASE;
@@ -47,7 +52,7 @@ public class C_Circle extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return degree >= targetDegree;
+    return degree >= arc;
   }
 
   // Called once after isFinished returns true

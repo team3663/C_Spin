@@ -108,7 +108,7 @@ SmartDashboard.putNumber("Drivetrain Angle", ss_holonomicdrivetrain.getGyroAngle
    */
   @Override
   public void autonomousInit() {
-    C_Circle circleOne = new C_Circle(360, 1);
+    C_Circle circleOne = new C_Circle(360, false);
     circleOne.start();
   }
 
