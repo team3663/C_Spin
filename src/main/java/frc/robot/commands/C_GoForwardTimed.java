@@ -17,11 +17,11 @@ import frc.robot.Robot;
 public class C_GoForwardTimed extends Command {
   private final ElapsedTime timer = new ElapsedTime();
   double speed = -.5;
-  int sec;
+  int secondsToRun;
 
-  public C_GoForwardTimed(int sec) {
+  public C_GoForwardTimed(int seccondsToRun) {
     requires(Robot.ss_holonomicdrivetrain);
-    this.sec = sec;
+    this.secondsToRun = seccondsToRun;
   }
   
 
@@ -40,7 +40,7 @@ public class C_GoForwardTimed extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(timer.getElapsedSeconds() >= sec){
+    if(timer.getElapsedSeconds() >= secondsToRun){
       return true;
     }
     return false;
