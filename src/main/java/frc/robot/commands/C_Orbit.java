@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class C_Orbit extends Command {
   private double radius;
   private double speed;
-  private double degree = 0;;
+  private double degree = 0;
   public C_Orbit(double radius, double speed) {
     requires(Robot.getDrivetrain());
     this.radius = radius;
@@ -30,13 +30,13 @@ public class C_Orbit extends Command {
   protected void execute() {
     double rotation = radius * 0.02 * speed;
     Robot.getDrivetrain().holonomicDrive(0, speed, rotation);
-    degree += 1;
+    degree += speed;
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return degree >= 360 * 180 / Math.PI;
+    return degree >= 360;
   }
 
   // Called once after isFinished returns true
