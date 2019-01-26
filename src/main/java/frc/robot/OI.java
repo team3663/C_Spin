@@ -21,7 +21,6 @@ public class OI {
 
     public void registerControls() {
         
-
         primaryController.getLeftBumperButton().whenPressed(new C_SetFieldOriented(false));
         primaryController.getLeftBumperButton().whenReleased(new C_SetFieldOriented( true));
         primaryController.getStartButton().whenPressed(new C_HolonomicDrive());

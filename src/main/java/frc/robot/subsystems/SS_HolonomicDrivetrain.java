@@ -21,6 +21,16 @@ import frc.robot.RobotMap;
 import frc.robot.commands.C_HolonomicDrive;
 
 public class SS_HolonomicDrivetrain extends Subsystem {
+    private final double WHEEL_RADIUS_MULITYPLIER = 1.05;
+    private final double DRIVE_GEAR_RATIO = 5.7777;
+    private final double MAX_VELOCITY = 10;
+    private final double MAX_ACCELERATION = 5.5;
+
+    public static final double WHEELBASE = 14.5;  // Swerve bot: 14.5 Comp bot: 20.5
+    public static final double TRACKWIDTH = 14.5; // Swerve bot: 13.5 Comp bot: 25.5
+  
+    public static final double WIDTH = 21;  // Swerve bot: 20 Comp bot: 37
+    public static final double LENGTH = 21; // Swerve bot: 19 Comp bot: 32
 
 	private double mAdjustmentAngle = 0;
 	private boolean mFieldOriented = true;
@@ -29,7 +39,9 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 	private final double length = 14.5;
 	private double speedMultiplier = 1;
 
+    private SwerveModule[] mSwerveModules;
 
+    private AHRS mNavX = new AHRS(Port.kUSB);
 
 	public final double getWidth() {
 		return width;
@@ -48,11 +60,11 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     }
 
     public double getMaxAcceleration() {
-        return 5.5;
+        return MAX_ACCELERATION;
     }
 
     public double getMaxVelocity() {
-        return 10;
+        return MAX_VELOCITY;
     }
 
 
@@ -84,20 +96,7 @@ public class SS_HolonomicDrivetrain extends Subsystem {
   }
   /////////////////////////////////////////////////////
   /////////////////////////////////////////////////////
-
-
-
-
-
-
   /////////////////////////////////////////////////////
-  public static final double WHEELBASE = 14.5;  // Swerve bot: 14.5 Comp bot: 20.5
-  public static final double TRACKWIDTH = 14.5; // Swerve bot: 13.5 Comp bot: 25.5
-
-  public static final double WIDTH = 21;  // Swerve bot: 20 Comp bot: 37
-  public static final double LENGTH = 21; // Swerve bot: 19 Comp bot: 32
-
-    
 	/*
 	 * 0 is Front Right
 	 * 1 is Front Left
@@ -110,9 +109,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
      * |      |
      * 2------3
 	 */
-	private SwerveModule[] mSwerveModules;
-
-    private AHRS mNavX = new AHRS(Port.kUSB);
 
     public SS_HolonomicDrivetrain() {
         
@@ -127,9 +123,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         SmartDashboard.putNumber("Back Right", BR);
         SmartDashboard.putNumber("Back Left", BL);
 
-        
-
-    
         mSwerveModules = new SwerveModule[]  {
             new SwerveModule(0, new TalonSRX(RobotMap.getAngleMotors(0)), new CANSparkMax(RobotMap.getDriveMotors(0), MotorType.kBrushless), FR),
             new SwerveModule(1, new TalonSRX(RobotMap.getAngleMotors(1)), new CANSparkMax(RobotMap.getDriveMotors(1), MotorType.kBrushless), FL),
@@ -142,8 +135,8 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
         for (SwerveModule module : mSwerveModules) {
             //module.setTargetAngle(0);
-            module.setDriveGearRatio(5.7777);
-            module.setDriveWheelRadius(module.getDriveWheelRadius() * 1.05);
+            module.setDriveGearRatio(DRIVE_GEAR_RATIO);
+            module.setDriveWheelRadius(module.getDriveWheelRadius() * WHEEL_RADIUS_MULITYPLIER);
         }
         // holonomicDrive(0, 0, .4);
     }
