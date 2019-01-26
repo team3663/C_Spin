@@ -14,7 +14,7 @@ public class C_Orbit extends Command {
   private double radius;
   private double speed;
   private double degree = 0;
-  private final double DEGREE_MULTIPLYER = 0.02;
+  private final double DEGREE_MULTIPLIER = 0.02;
   public C_Orbit(double radius, double speed) {
     requires(Robot.getDrivetrain());
     this.radius = radius;
@@ -29,7 +29,7 @@ public class C_Orbit extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double rotation = radius * DEGREE_MULTIPLYER * speed;
+    double rotation = radius * DEGREE_MULTIPLIER * speed;
     Robot.getDrivetrain().holonomicDrive(0, speed, rotation);
     degree += speed;
   }

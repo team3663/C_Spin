@@ -16,11 +16,11 @@ import frc.robot.Robot;
  */
 public class C_GoForwardTimed extends Command {
   private final ElapsedTime timer = new ElapsedTime();
-  double speed = -.5;
+  double speed = 0.5;
   int secondsToRun;
 
   public C_GoForwardTimed(int seccondsToRun) {
-    requires(Robot.ss_holonomicdrivetrain);
+    requires(Robot.getDrivetrain());
     this.secondsToRun = seccondsToRun;
   }
   
@@ -33,7 +33,7 @@ public class C_GoForwardTimed extends Command {
     speed *= Math.abs(speed);
     SmartDashboard.putNumber("Forward", speed);
     
-    Robot.ss_holonomicdrivetrain.holonomicDrive(speed, 0, 0);
+    Robot.getDrivetrain().holonomicDrive(speed, 0, 0);
   }
 
   // Called repeatedly when this Command is scheduled to run
