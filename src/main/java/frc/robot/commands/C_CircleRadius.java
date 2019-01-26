@@ -47,8 +47,8 @@ public class C_CircleRadius extends Command {
   @Override
   protected void execute() {
     double distance = oldDistance = Robot.getDrivetrain().getSwerveModule(1).getDriveDistance();
-    double forward = Math.sin(degree) * speed * direction * mirrored;
-    double strafe = Math.cos(degree) * speed * direction;
+    double forward = Math.sin(degree * Math.PI / 180) * speed * direction * mirrored;
+    double strafe = Math.cos(degree * Math.PI / 180) * speed * direction;
     Robot.getDrivetrain().holonomicDrive(forward, strafe, 0);
     if(distance - oldDistance >= inchesPerDegree) {
       degree += direction;
