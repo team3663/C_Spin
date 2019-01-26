@@ -5,6 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+/*
+    * 0 is Front Right
+    * 1 is Front Left
+    * 2 is Back Left
+    * 3 is Back Right
+    * 
+    *   front
+    * 1------0
+    * |      |
+    * |      |
+    * 2------3
+    */
+
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -43,73 +56,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
 
     private AHRS mNavX = new AHRS(Port.kUSB);
 
-	public final double getWidth() {
-		return width;
-	}
-
-	public final double getLength() {
-		return length;
-	}
-
-	public double getSpeedMultiplier() {
-		return speedMultiplier;
-    }
-    
-    public void setSpeedMultiplier( double speed){
-        speedMultiplier = speed;
-    }
-
-    public double getMaxAcceleration() {
-        return MAX_ACCELERATION;
-    }
-
-    public double getMaxVelocity() {
-        return MAX_VELOCITY;
-    }
-
-
-	public double getAdjustmentAngle() {
-		return mAdjustmentAngle;
-	}
-
-	@Override
-	protected void initDefaultCommand() {
-		setDefaultCommand(new C_HolonomicDrive());
-	}
-
-	public boolean isFieldOriented() {
-		return mFieldOriented;
-	}
-
-	public void setAdjustmentAngle(double adjustmentAngle) {
-		System.out.printf("New Adjustment Angle: % .3f\n", adjustmentAngle);
-		mAdjustmentAngle = adjustmentAngle;
-	}
-
-	public void setFieldOriented(boolean fieldOriented) {
-		mFieldOriented = fieldOriented;
-	}
-
-
-	public void zeroGyro() {
-		setAdjustmentAngle(getRawGyroAngle());
-  }
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////
-	/*
-	 * 0 is Front Right
-	 * 1 is Front Left
-	 * 2 is Back Left
-	 * 3 is Back Right
-     * 
-     *   front
-     * 1------0
-     * |      |
-     * |      |
-     * 2------3
-	 */
-
     public SS_HolonomicDrivetrain() {
         
         zeroGyro();
@@ -141,68 +87,21 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         // holonomicDrive(0, 0, .4);
     }
 
-    /**
-     * @deprecated
-     * @param forward
-     * @param strafe
-     * @param rotation
-     * @return
-     */
-    public double[] calculateSwerveModuleAngles(double forward, double strafe, double rotation) {
-        if (isFieldOriented()) {
-            double angleRad = Math.toRadians(getGyroAngle());
-            double temp = forward * Math.cos(angleRad) + strafe * Math.sin(angleRad);
-            strafe = -forward * Math.sin(angleRad) + strafe * Math.cos(angleRad);
-            forward = temp;
-        }
+    @Override
+	protected void initDefaultCommand() {
+		setDefaultCommand(new C_HolonomicDrive());
+	}
 
-        double a = strafe - rotation * (WHEELBASE / TRACKWIDTH);
-        double b = strafe + rotation * (WHEELBASE / TRACKWIDTH);
-        double c = forward - rotation * (TRACKWIDTH / WHEELBASE);
-        double d = forward + rotation * (TRACKWIDTH / WHEELBASE);
-
-        return new double[]{
-                Math.atan2(b, c) * 180 / Math.PI,
-                Math.atan2(b, d) * 180 / Math.PI,
-                Math.atan2(a, d) * 180 / Math.PI,
-                Math.atan2(a, c) * 180 / Math.PI
-        };
-    }
-
-    public AHRS getNavX() {
-        return mNavX;
-    }
-
-    public double getGyroAngle() {
-        double angle = mNavX.getAngle() - getAdjustmentAngle();
-        angle %= 360;
-        if (angle < 0) angle += 360;
-
-        if (Robot.PRACTICE_BOT) {
-            return angle;
-        } else {
-            return 360 - angle;
+    public void stopDriveMotors() {
+        for (SwerveModule module : mSwerveModules) {
+            module.setTargetSpeed(0);
         }
     }
-
-    public double getGyroRate() {
-        return mNavX.getRate();
-    }
-
-    public double getRawGyroAngle() {
-        double angle = mNavX.getAngle();
-        angle %= 360;
-        if (angle < 0) angle += 360;
-
-        return angle;
-    }
-
-    public double getGyroAcelleration(){
-        return mNavX.getAccelFullScaleRangeG();
-    }
-
-    public SwerveModule getSwerveModule(int i) {
-        return mSwerveModules[i];
+    
+    public void resetMotors() {
+    	for(int i = 0; i < mSwerveModules.length; i++) {
+    		mSwerveModules[i].resetMotor();
+    	}
     }
 
     public void holonomicDrive(double forward, double strafe, double rotation) {
@@ -260,21 +159,118 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         }
     }
 
-    
-    public void stopDriveMotors() {
-        for (SwerveModule module : mSwerveModules) {
-            module.setTargetSpeed(0);
+    /**
+     * @deprecated
+     * @param forward
+     * @param strafe
+     * @param rotation
+     * @return
+     */
+    public double[] calculateSwerveModuleAngles(double forward, double strafe, double rotation) {
+        if (isFieldOriented()) {
+            double angleRad = Math.toRadians(getGyroAngle());
+            double temp = forward * Math.cos(angleRad) + strafe * Math.sin(angleRad);
+            strafe = -forward * Math.sin(angleRad) + strafe * Math.cos(angleRad);
+            forward = temp;
+        }
+
+        double a = strafe - rotation * (WHEELBASE / TRACKWIDTH);
+        double b = strafe + rotation * (WHEELBASE / TRACKWIDTH);
+        double c = forward - rotation * (TRACKWIDTH / WHEELBASE);
+        double d = forward + rotation * (TRACKWIDTH / WHEELBASE);
+
+        return new double[]{
+                Math.atan2(b, c) * 180 / Math.PI,
+                Math.atan2(b, d) * 180 / Math.PI,
+                Math.atan2(a, d) * 180 / Math.PI,
+                Math.atan2(a, c) * 180 / Math.PI
+        };
+    }
+
+    public double getGyroAngle() {
+        double angle = mNavX.getAngle() - getAdjustmentAngle();
+        angle %= 360;
+        if (angle < 0) angle += 360;
+
+        if (Robot.PRACTICE_BOT) {
+            return angle;
+        } else {
+            return 360 - angle;
         }
     }
-    
-    public void resetMotors() {
-    	for(int i = 0; i < mSwerveModules.length; i++) {
-    		mSwerveModules[i].resetMotor();
-    	}
+
+    public double getGyroRate() {
+        return mNavX.getRate();
+    }
+
+    public double getRawGyroAngle() {
+        double angle = mNavX.getAngle();
+        angle %= 360;
+        if (angle < 0) angle += 360;
+
+        return angle;
+    }
+
+    public double getGyroAcelleration(){
+        return mNavX.getAccelFullScaleRangeG();
+    }
+
+    public SwerveModule getSwerveModule(int i) {
+        return mSwerveModules[i];
+    }
+
+    public AHRS getNavX() {
+        return mNavX;
     }
 
     public SwerveModule[] getSwerveModules() {
         return mSwerveModules;
     }
 
+    public final double getWidth() {
+		return width;
+	}
+
+	public final double getLength() {
+		return length;
+	}
+
+	public double getSpeedMultiplier() {
+		return speedMultiplier;
+    }
+    
+    public void setSpeedMultiplier( double speed){
+        speedMultiplier = speed;
+    }
+
+    public double getMaxAcceleration() {
+        return MAX_ACCELERATION;
+    }
+
+    public double getMaxVelocity() {
+        return MAX_VELOCITY;
+    }
+
+
+	public double getAdjustmentAngle() {
+		return mAdjustmentAngle;
+	}
+
+	public boolean isFieldOriented() {
+		return mFieldOriented;
+	}
+
+	public void setAdjustmentAngle(double adjustmentAngle) {
+		System.out.printf("New Adjustment Angle: % .3f\n", adjustmentAngle);
+		mAdjustmentAngle = adjustmentAngle;
+	}
+
+	public void setFieldOriented(boolean fieldOriented) {
+		mFieldOriented = fieldOriented;
+	}
+
+
+	public void zeroGyro() {
+		setAdjustmentAngle(getRawGyroAngle());
+  }
 }
