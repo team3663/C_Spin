@@ -32,7 +32,12 @@ public class SwerveModule  {
     private double driveWheelRadius = 2;
     private boolean angleMotorJam = false;
 
-
+    /**
+     * @param moduleNumber the ID number of the swerve module (0-3)
+     * @param angleMotor the motor used to rotate the swerve module
+     * @param driveMotor the motor used to drive the swerve module
+     * @param zeroOffset how far the angle motor is offset from its default position
+     */
     public SwerveModule(int moduleNumber, TalonSRX angleMotor, CANSparkMax driveMotor, double zeroOffset) {
         this.moduleNumber = moduleNumber;
 
@@ -74,7 +79,6 @@ public class SwerveModule  {
     }
 
     public void zeroDistance() {
-        
         driveMotor.getEncoder().getPosition();
     }
     
@@ -244,6 +248,9 @@ public class SwerveModule  {
         driveMotor.set(distance);
     }
 
+    /** 
+     * @param speed set target speed (-1, 1)
+     */
     public void setTargetSpeed(double speed) {
    	// if(angleMotorJam) {
    	// 	mDriveMotor.set(ControlMode.Disabled, 0);
