@@ -16,14 +16,18 @@ public class C_CircleRadius extends Command {
   private double inchesPerDegree;
   private double arc;
   private double speed;
-  private double radius;
   private int mirrored = 1;
   private int direction;
   private double oldDistance;
 
+  /**
+   * @param speed The speed the robot should tavel (from -1 to 1)
+   * @param radius The radius of the circle (inches)
+   * @param arc How far the robot travels around the circle (degrees)
+   * @param mirrored determines if the circle is mirrored on the x axis.
+   */
   public C_CircleRadius(double speed, double radius, double arc, boolean mirrored) {
     requires(Robot.getDrivetrain());
-    this.radius = radius;
     this.speed = speed;
     this.arc = arc;
     if(mirrored) {
@@ -47,7 +51,7 @@ public class C_CircleRadius extends Command {
     double strafe = Math.cos(degree) * speed * direction;
     Robot.getDrivetrain().holonomicDrive(forward, strafe, 0);
     if(distance - oldDistance >= inchesPerDegree) {
-      degree++;
+      degree += direction;
       oldDistance = distance;
     }
   }
