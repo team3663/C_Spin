@@ -14,7 +14,7 @@ public class C_Orbit extends Command {
   private double radius;
   private double speed;
   private double degree = 0;
-  private final double DEGREE_MULTIPLIER = 0.02;
+  private final double DEGREE_MULTIPLIER = -0.02;
   public C_Orbit(double radius, double speed) {
     requires(Robot.getDrivetrain());
     this.radius = radius;

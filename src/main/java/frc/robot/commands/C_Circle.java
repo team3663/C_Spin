@@ -13,7 +13,7 @@ import frc.robot.subsystems.SS_HolonomicDrivetrain;
 
 public class C_Circle extends Command {
 
-  private static double RADIUS_MULTIPLY = 0.5;
+  private static double RADIUS_MULTIPLY = 0.1;
   private static double DEGREE_INCREASE = 0.1;
   
   private double arc;
@@ -23,7 +23,7 @@ public class C_Circle extends Command {
 
   /**
    * @param arc the arc that the robot needs to travel (in degress, negavive to left, positive to right)
-   * @param reversed wether the circle is reversed on the x axis
+   * @param reversed wether the circle is reversed/mirrored on the x axis
    */
   public C_Circle(double arc, boolean reversed) {
     requires(Robot.getDrivetrain());
@@ -31,7 +31,7 @@ public class C_Circle extends Command {
     if(reversed) {
       this.reversed = -1; 
     }
-    this.arc = arc * 180 / Math.PI;
+    this.arc = arc;
   }
 
   // Called just before this Command runs the first time
@@ -43,8 +43,8 @@ public class C_Circle extends Command {
   @Override
   protected void execute() {
 
-    double forward = Math.sin(degree) * RADIUS_MULTIPLY * direction * reversed;
-    double strafe = Math.cos(degree) * RADIUS_MULTIPLY * direction;
+    double forward = Math.sin(degree * Math.PI / 180) * RADIUS_MULTIPLY * direction * reversed;
+    double strafe = Math.cos(degree * Math.PI / 180) * RADIUS_MULTIPLY * direction;
     Robot.getDrivetrain().holonomicDrive(forward, strafe, 0);
     degree += DEGREE_INCREASE;
   }

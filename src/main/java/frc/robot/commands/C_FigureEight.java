@@ -14,10 +14,9 @@ public class C_FigureEight extends CommandGroup {
    * Add your docs here.
    */
   public C_FigureEight() {
-    for(int i = 0; i < 4; i++)
-    {
-      addSequential(new C_Circle(360, -1));
-      addSequential(new C_Circle(360, -1));
+    for(int i = 0; i < 4; i++) {
+      addSequential(new C_Circle(360, false));
+      addSequential(new C_Circle(-360, true));
     }
     // Add Commands here:
     // e.g. addSequential(new Command1());

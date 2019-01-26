@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.C_Circle;
 import frc.robot.commands.C_HolonomicDrive;
+import frc.robot.commands.C_Orbit;
 import frc.robot.subsystems.SS_HolonomicDrivetrain;
 
 
@@ -117,7 +118,7 @@ SmartDashboard.putNumber("Drivetrain Angle", ss_holonomicdrivetrain.getGyroAngle
    */
   @Override
   public void autonomousPeriodic() {
-    
+    Scheduler.getInstance().run();
   }
 
   @Override
