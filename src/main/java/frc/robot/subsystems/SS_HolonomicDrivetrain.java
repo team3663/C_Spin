@@ -49,7 +49,6 @@ public class SS_HolonomicDrivetrain extends Subsystem {
     private SwerveModule[] swerveModules;
     private AHRS navX = new AHRS(Port.kUSB);
 
-
     public SS_HolonomicDrivetrain() { 
         zeroGyro();
 
@@ -93,6 +92,9 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         }
     }
     
+    /**
+     * resets the motors on all four swerve modules
+     */
     public void resetMotors() {
     	for(int i = 0; i < swerveModules.length; i++) {
     		swerveModules[i].resetMotor();
@@ -215,6 +217,9 @@ public class SS_HolonomicDrivetrain extends Subsystem {
         return navX.getRate();
     }
 
+    /**
+     * @return returns the raw gyro angle with no adjustment angle
+     */
     public double getRawGyroAngle() {
         double angle = navX.getAngle();
         angle %= 360;
