@@ -10,17 +10,20 @@ import frc.robot.subsystems.SS_HolonomicDrivetrain;
 
 public final class C_SetFieldOriented extends Command {
 
-    private boolean field;
+    private boolean fieldOriented;
 
     @Deprecated
-    public C_SetFieldOriented(boolean field) {
+    public C_SetFieldOriented(boolean fieldOriented) {
         requires(Robot.getDrivetrain());
-        this.field = field;
+        this.fieldOriented = fieldOriented;
     }
 
+    /**
+     * sets field orientation to fieldOriented
+     */
     @Override
     protected void execute() {
-        Robot.getDrivetrain().setFieldOriented(field);
+        Robot.getDrivetrain().setFieldOriented(fieldOriented);
     }
 
     @Override

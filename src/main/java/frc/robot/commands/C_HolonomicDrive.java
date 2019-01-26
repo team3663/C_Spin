@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 /**
- * This command drives the swerve drivetrain
+ * commands drives the swerve drivetrain
  */
 public class C_HolonomicDrive extends Command {
 	private static final double DEAD_ZONE = 0.5;
@@ -27,6 +27,9 @@ public class C_HolonomicDrive extends Command {
 		return input;
 	}
 	
+	/**
+	 * initializes command
+	 */
 	@Override
 	protected void initialize() {
 
@@ -73,7 +76,7 @@ public class C_HolonomicDrive extends Command {
 	protected void interrupted() {
 		end();
 	}
-
+	
 	@Override
 	protected boolean isFinished() {
 		return false;
