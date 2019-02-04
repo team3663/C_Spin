@@ -1,4 +1,4 @@
-/*----------------------------------------------------------------------------*/
+        /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
@@ -9,50 +9,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.SS_HolonomicDrivetrain;
+import frc.robot.subsystems.SS_FollowTestMotors;
 
-public class C_Circle extends Command {
-
-  private static double RADIUS_MULTIPLY = 0.1;
-  private static double DEGREE_INCREASE = 10;
+public class C_TestFollowMotors extends Command {
   
-  private double arc;
-  private double degree = 0;
-  private int direction = 1;
-  private int reversed = 1;
+  private SS_FollowTestMotors testMotors;
 
-  /**
-   * @param arc the arc that the robot needs to travel (in degress, negavive to left, positive to right)
-   * @param reversed wether the circle is reversed/mirrored on the x axis
-   */
-  public C_Circle(double arc, boolean reversed) {
-    requires(Robot.getDrivetrain());
-    direction = (int)Math.signum(arc);
-    if(reversed) {
-      this.reversed = -1; 
-    }
-    this.arc = arc;
+  public C_TestFollowMotors() {
+    requires(Robot.getTestMotors());
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    testMotors = Robot.getTestMotors();
+    testMotors.goToPos(0.3);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    double forward = Math.sin(degree * Math.PI / 180) * RADIUS_MULTIPLY * direction * reversed;
-    double strafe = Math.cos(degree * Math.PI / 180) * RADIUS_MULTIPLY * direction;
-    Robot.getDrivetrain().holonomicDrive(forward, strafe, 0);
-    degree += DEGREE_INCREASE;
+    //Robot.getTestMotors().goToPos(3);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return degree >= arc;
+    return true;
   }
 
   // Called once after isFinished returns true
@@ -64,6 +47,5 @@ public class C_Circle extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

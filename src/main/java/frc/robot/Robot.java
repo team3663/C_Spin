@@ -7,27 +7,38 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commandGroups.CG_Polygon;
 import frc.robot.commands.C_Circle;
+import frc.robot.commands.C_CircleRadius;
 import frc.robot.commands.C_HolonomicDrive;
 import frc.robot.commands.C_Orbit;
+import frc.robot.commands.C_TestFollowMotors;
+import frc.robot.commands.C_Turn;
+import frc.robot.subsystems.SS_FollowTestMotors;
 import frc.robot.subsystems.SS_HolonomicDrivetrain;
+import frc.robot.subsystems.SS_RevAirPressureSensor;
+import frc.robot.subsystems.SS_RevColorSensor;
 
 
 public class Robot extends TimedRobot {
   public static final boolean PRACTICE_BOT = true;
 
+  public static SS_FollowTestMotors testMotors;
   public static SS_HolonomicDrivetrain ss_holonomicdrivetrain;
   public static OI oi;
+  public static SS_RevColorSensor colorSensor;
+  public static SS_RevAirPressureSensor pressureSensor;
 
   
+
   /**
    * initializes Oi and ss_holonomicdrivetrains
    */
@@ -35,7 +46,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI(this);
     ss_holonomicdrivetrain = new SS_HolonomicDrivetrain();
+    colorSensor = new SS_RevColorSensor(Port.kOnboard);
 
+    testMotors = new SS_FollowTestMotors();
+    pressureSensor = new SS_RevAirPressureSensor();
 
 		oi.registerControls();
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -48,9 +62,21 @@ public class Robot extends TimedRobot {
 		return oi;
   }
 
+  public static SS_FollowTestMotors getTestMotors() {
+    return testMotors;
+  }
+
+  public static SS_RevAirPressureSensor getPressureSensor() {
+    return pressureSensor;
+  }
+
   
   public static SS_HolonomicDrivetrain getDrivetrain() {
 		return ss_holonomicdrivetrain;///
+  }
+
+  public static SS_RevColorSensor getRevColorSensor() {
+    return colorSensor;
   }
 
   /**
@@ -109,13 +135,15 @@ SmartDashboard.putNumber("Drivetrain Angle", ss_holonomicdrivetrain.getGyroAngle
    */
   @Override
   public void autonomousInit() {
-    C_Circle circleOne = new C_Circle(360, false);
-    circleOne.start();
+    C_TestFollowMotors testMotors = new C_TestFollowMotors();
+    testMotors.start();
   }
 
   /**
+   * 
    * This function is called periodically during autonomous.
    */
+
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
@@ -123,6 +151,7 @@ SmartDashboard.putNumber("Drivetrain Angle", ss_holonomicdrivetrain.getGyroAngle
 
   @Override
   public void teleopInit() {
+
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

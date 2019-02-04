@@ -33,6 +33,11 @@ public class RobotMap {
   public static final int CARRIAGE_LEFT_MOTOR = 21;
   public static final int CARRIAGE_RIGHT_MOTOR = 22;
 
+  public static final int TEST_SPARK_ONE = 71;
+  public static final int TEST_SPARK_TWO = 72;
+
+  public static final int PRESSURE_SENSOR = 0;
+
   public static final int getDriveMotors(int module){
     int motors[] = {0,4,7,3};
     int motor = motors[module];

@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class C_CircleRadius extends Command {
@@ -49,6 +50,10 @@ public class C_CircleRadius extends Command {
     double distance = oldDistance = Robot.getDrivetrain().getSwerveModule(1).getDriveDistance();
     double forward = Math.sin(degree * Math.PI / 180) * speed * direction * mirrored;
     double strafe = Math.cos(degree * Math.PI / 180) * speed * direction;
+
+    SmartDashboard.putNumber("overallDistance", Robot.getDrivetrain().getSwerveModule(1).getDriveDistance());
+    SmartDashboard.putNumber("distance", distance);
+
     Robot.getDrivetrain().holonomicDrive(forward, strafe, 0);
     if(distance - oldDistance >= inchesPerDegree) {
       degree += direction;

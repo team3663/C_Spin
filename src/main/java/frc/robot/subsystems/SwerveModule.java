@@ -85,27 +85,43 @@ public class SwerveModule  {
     }
 
     private double encoderTicksToInches(double ticks) {
-        // if (Robot.PRACTICE_BOT) {
-        //     return ticks / 36.65;
-        // } else {
-        //     return ticks / 35.6;
-        // }
-
-        //TODO
-        return 0;
+        if (Robot.PRACTICE_BOT) {
+            return ticks / 36.65;
+        } else {
+            return ticks / 35.6;
+        }
     }
 
     private int inchesToEncoderTicks(double inches) {
-        // if (Robot.PRACTICE_BOT) {
-        //     return (int) Math.round(inches * 36.65);
-        // } else {
-        //     return (int) Math.round(inches * 35.6);
-        // }
+        if (Robot.PRACTICE_BOT) {
+            return (int) Math.round(inches * 36.65);
+        } else {
+            return (int) Math.round(inches * 35.6);
+        }
+    }
+
+    // private double encoderTicksToInches(double ticks) {
+    //     // if (Robot.PRACTICE_BOT) {
+    //     //     return ticks / 36.65;
+    //     // } else {
+    //     //     return ticks / 35.6;
+    //     // }
+
+    //     //TODO
+    //     return 0;
+    // }
+
+    // private int inchesToEncoderTicks(double inches) {
+    //     // if (Robot.PRACTICE_BOT) {
+    //     //     return (int) Math.round(inches * 36.65);
+    //     // } else {
+    //     //     return (int) Math.round(inches * 35.6);
+    //     // }
         
 
-        //TODO 
-        return 0;
-    }
+    //     //TODO 
+    //     return 0;
+    // }
 
     
     public double getDriveWheelRadius() {

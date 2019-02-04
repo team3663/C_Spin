@@ -8,30 +8,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.SS_HolonomicDrivetrain;
 
-public class C_Circle extends Command {
-
-  private static double RADIUS_MULTIPLY = 0.1;
-  private static double DEGREE_INCREASE = 10;
-  
-  private double arc;
-  private double degree = 0;
-  private int direction = 1;
-  private int reversed = 1;
-
-  /**
-   * @param arc the arc that the robot needs to travel (in degress, negavive to left, positive to right)
-   * @param reversed wether the circle is reversed/mirrored on the x axis
-   */
-  public C_Circle(double arc, boolean reversed) {
-    requires(Robot.getDrivetrain());
-    direction = (int)Math.signum(arc);
-    if(reversed) {
-      this.reversed = -1; 
-    }
-    this.arc = arc;
+public class C_TestPressureSensor extends Command {
+  public C_TestPressureSensor() {
+    requires(Robot.getPressureSensor());
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -42,17 +26,13 @@ public class C_Circle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    double forward = Math.sin(degree * Math.PI / 180) * RADIUS_MULTIPLY * direction * reversed;
-    double strafe = Math.cos(degree * Math.PI / 180) * RADIUS_MULTIPLY * direction;
-    Robot.getDrivetrain().holonomicDrive(forward, strafe, 0);
-    degree += DEGREE_INCREASE;
+    SmartDashboard.putNumber("PSI", Robot.getPressureSensor().getPressure());
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return degree >= arc;
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -64,6 +44,5 @@ public class C_Circle extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
